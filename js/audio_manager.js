@@ -78,6 +78,26 @@ const AudioManager = (function () {
     return Promise.all(promises);
   }
 
+  /** Fade out every track except `exclude`. Used when switching BGM so the target can stay "playing" at volume 0. */
+  function _stopAllTracksExcept(exclude) {
+    const promises = [];
+    [dramaticTrack, partyTrack, investigationTrack, revealTrack].forEach(t => {
+      if (t && t !== exclude && !t.paused) promises.push(_fadeOut(t, FADE_MS));
+    });
+    return Promise.all(promises);
+  }
+
+  /**
+   * Start playback at volume 0 in the same synchronous turn as the user gesture.
+   * Browsers often block audio.play() that runs only after async delays (e.g. post-fade Promise).
+   */
+  function _primePlay(track) {
+    if (!track) return;
+    track.volume = 0;
+    if (muted) track.muted = true;
+    track.play().catch(() => {});
+  }
+
   function _hasActiveTracks(exclude) {
     return [dramaticTrack, partyTrack, investigationTrack, revealTrack]
       .some(t => t && t !== exclude && !t.paused);
@@ -87,7 +107,10 @@ const AudioManager = (function () {
     if (!dramaticTrack || !dramaticTrack.paused) return;
     if (revealTrack && !revealTrack.paused) return;
     if (_hasActiveTracks(dramaticTrack)) {
-      _stopAllTracks().then(() => _fadeIn(dramaticTrack, VOLUME, FADE_MS));
+      _primePlay(dramaticTrack);
+      _stopAllTracksExcept(dramaticTrack).then(() =>
+        _fadeIn(dramaticTrack, VOLUME, FADE_MS)
+      );
     } else {
       _fadeIn(dramaticTrack, VOLUME, FADE_MS);
     }
@@ -96,7 +119,10 @@ const AudioManager = (function () {
   function playParty() {
     if (!partyTrack || !partyTrack.paused) return;
     if (_hasActiveTracks(partyTrack)) {
-      _stopAllTracks().then(() => _fadeIn(partyTrack, VOLUME, FADE_MS));
+      _primePlay(partyTrack);
+      _stopAllTracksExcept(partyTrack).then(() =>
+        _fadeIn(partyTrack, VOLUME, FADE_MS)
+      );
     } else {
       _fadeIn(partyTrack, VOLUME, FADE_MS);
     }
@@ -104,7 +130,8 @@ const AudioManager = (function () {
 
   function playInvestigation() {
     if (!investigationTrack) return;
-    _stopAllTracks().then(() => {
+    _primePlay(investigationTrack);
+    _stopAllTracksExcept(investigationTrack).then(() => {
       _fadeIn(investigationTrack, VOLUME, FADE_MS);
     });
   }
@@ -112,8 +139,9 @@ const AudioManager = (function () {
   /** Reveal / ending screen: fades out other BGM, then fades in (non-looping). */
   function playReveal() {
     if (!revealTrack) return;
-    _stopAllTracks().then(() => {
-      revealTrack.currentTime = 0;
+    revealTrack.currentTime = 0;
+    _primePlay(revealTrack);
+    _stopAllTracksExcept(revealTrack).then(() => {
       _fadeIn(revealTrack, VOLUME, FADE_MS);
     });
   }
