@@ -416,7 +416,8 @@ const GameEngine = (() => {
       renderInvestigation();
       UIRenderer.showScreen('investigation');
     } else {
-      AudioManager.stopDramatic();
+      // Resume or single-phase: switch from intro sting (or silence) to investigation BGM.
+      AudioManager.playInvestigation();
       StateManager.setPhase('investigation');
       renderInvestigation();
       UIRenderer.showScreen('investigation');
