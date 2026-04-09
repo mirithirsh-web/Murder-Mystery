@@ -1,5 +1,10 @@
-# GitHub Pages — static site (no Jekyll build).
-# Settings → Pages → Source: GitHub Actions
+# GitHub Pages — static HTML/JS (no Jekyll).
+#
+# REQUIRED ONCE (before this workflow can deploy):
+#   Repo → Settings → Pages → Build and deployment → Source → "GitHub Actions" → Save
+# If Source is still "Deploy from a branch" or not set, the deploy job will fail.
+#
+# Easier alternative: use only "Deploy from a branch" (main, /root) and delete this file.
 name: Deploy to GitHub Pages
 
 on:
@@ -21,7 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
+      # Do NOT use configure-pages here: it calls GET /repos/.../pages and 404s until
+      # Settings → Pages → Source is set to "GitHub Actions" (chicken-and-egg).
       - uses: actions/upload-pages-artifact@v4
         with:
           path: .

@@ -10,15 +10,23 @@ Your site URL (after Pages is enabled):
 
 ### If you see “404 / There isn’t a GitHub Pages site here”
 
-GitHub does **not** turn Pages on automatically. Do this once:
+GitHub does **not** turn Pages on automatically.
 
-1. Open the repo on GitHub: **Settings** (tab) → **Pages** (left sidebar).
-2. Under **Build and deployment** → **Source**, choose **GitHub Actions** (recommended; this repo includes a workflow).
-3. Push any commit to `main` (or open **Actions** → run **Deploy to GitHub Pages** manually). Wait until the workflow finishes (green check).
-4. Refresh **Settings → Pages** — you should see **“Your site is live at …”**
-5. Open the URL again (hard refresh: Cmd+Shift+R).
+#### Option A — Simplest (no Actions)
 
-**Alternative (no Actions):** set **Source** to **Deploy from a branch**, branch **main**, folder **/ (root)**, Save, wait ~2 minutes.
+1. **Settings** → **Pages** → **Build and deployment** → **Source**: **Deploy from a branch**
+2. Branch: **main**, folder: **/ (root)** → **Save**
+3. Wait 1–2 minutes, then open **https://mirithirsh-web.github.io/Murder-Mystery/**
+
+You can ignore the **Actions** workflow for this option (or delete `.github/workflows/deploy-github-pages.yml` later).
+
+#### Option B — GitHub Actions workflow
+
+The workflow **cannot** deploy until Pages is wired to Actions **once** in the UI (otherwise the API returns “Not Found”):
+
+1. **Settings** → **Pages** → **Source**: **GitHub Actions** → **Save** (do this **before** expecting a green deploy).
+2. **Actions** → **Deploy to GitHub Pages** → **Re-run all jobs** (or push a commit to `main`).
+3. When the run is green, refresh **Settings → Pages** for the live URL.
 
 ## Run locally
 
