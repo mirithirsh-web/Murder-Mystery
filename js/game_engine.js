@@ -168,6 +168,9 @@ const GameEngine = (() => {
     i18n.init();
     UIRenderer.init();
     document.body.className = `theme-${titleSelection.theme}`;
+    document.querySelectorAll('.theme-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.theme === titleSelection.theme);
+    });
 
     await reloadScenarios();
     UIRenderer.setupThemeSelector(onThemeChange);
