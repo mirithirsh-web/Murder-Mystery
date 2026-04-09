@@ -4,29 +4,20 @@ Browser-based detective game (**Deadly Secrets** scenario). English UI.
 
 ## Play online (GitHub Pages)
 
-Your site URL (after Pages is enabled):
+**Live URL:** https://mirithirsh-web.github.io/Murder-Mystery/
 
-**https://mirithirsh-web.github.io/Murder-Mystery/**
+### Turn on Pages (one-time)
 
-### If you see “404 / There isn’t a GitHub Pages site here”
+GitHub does **not** publish the site until you enable it:
 
-GitHub does **not** turn Pages on automatically.
+1. Open the repo on GitHub → **Settings** → **Pages** (sidebar).
+2. **Build and deployment** → **Source**: **Deploy from a branch**.
+3. Branch: **main**, folder: **/ (root)** → **Save**.
+4. Wait **1–2 minutes**, then open the URL above (hard refresh if needed).
 
-#### Option A — Simplest (no Actions)
+If you see **404 — There isn’t a GitHub Pages site here**, Pages is not enabled yet or the branch/folder is wrong.
 
-1. **Settings** → **Pages** → **Build and deployment** → **Source**: **Deploy from a branch**
-2. Branch: **main**, folder: **/ (root)** → **Save**
-3. Wait 1–2 minutes, then open **https://mirithirsh-web.github.io/Murder-Mystery/**
-
-You can ignore the **Actions** workflow for this option (or delete `.github/workflows/deploy-github-pages.yml` later).
-
-#### Option B — GitHub Actions workflow
-
-The workflow **cannot** deploy until Pages is wired to Actions **once** in the UI (otherwise the API returns “Not Found”):
-
-1. **Settings** → **Pages** → **Source**: **GitHub Actions** → **Save** (do this **before** expecting a green deploy).
-2. **Actions** → **Deploy to GitHub Pages** → **Re-run all jobs** (or push a commit to `main`).
-3. When the run is green, refresh **Settings → Pages** for the live URL.
+This project is **static files only** (no GitHub Actions required).
 
 ## Run locally
 
@@ -36,9 +27,9 @@ cd Murder-Mystery
 python3 server.py
 ```
 
-Open **http://localhost:8081** (or `python3 -m http.server 8080` and use port 8080).
+Open **http://localhost:8081** (or `python3 -m http.server 8080`).
 
-Using `file://` on `index.html` is unreliable because the game loads JSON via `fetch`.
+Do not rely on opening `index.html` via `file://` — the game loads JSON with `fetch`, which needs a real HTTP URL.
 
 ## License
 
