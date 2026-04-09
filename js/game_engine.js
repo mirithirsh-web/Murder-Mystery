@@ -689,7 +689,9 @@ const GameEngine = (() => {
 
   function cancelAccusation() {
     StateManager.setPhase('investigation');
+    renderInvestigation();
     UIRenderer.showScreen('investigation');
+    AudioManager.playInvestigation();
   }
 
   function goToColdCaseAccusation() {
@@ -706,7 +708,9 @@ const GameEngine = (() => {
 
   function cancelColdCaseAccusation() {
     StateManager.setPhase('investigation');
+    renderInvestigation();
     UIRenderer.showScreen('investigation');
+    AudioManager.playInvestigation();
   }
 
   function _finalizeReveal() {

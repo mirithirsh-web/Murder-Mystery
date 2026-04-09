@@ -98,42 +98,29 @@ const AudioManager = (function () {
     track.play().catch(() => {});
   }
 
-  function _hasActiveTracks(exclude) {
-    return [dramaticTrack, partyTrack, investigationTrack, revealTrack]
-      .some(t => t && t !== exclude && !t.paused);
-  }
-
   function playDramatic() {
     if (!dramaticTrack || !dramaticTrack.paused) return;
     if (revealTrack && !revealTrack.paused) return;
-    if (_hasActiveTracks(dramaticTrack)) {
-      _primePlay(dramaticTrack);
-      _stopAllTracksExcept(dramaticTrack).then(() =>
-        _fadeIn(dramaticTrack, VOLUME, FADE_MS)
-      );
-    } else {
-      _fadeIn(dramaticTrack, VOLUME, FADE_MS);
-    }
+    // Prime + start fade immediately (same turn as user gesture). Waiting until
+    // other tracks finish fading leaves this track at volume 0 for ~FADE_MS; browsers
+    // often suspend inaudible playback, so delayed _fadeIn then never becomes audible.
+    _primePlay(dramaticTrack);
+    _stopAllTracksExcept(dramaticTrack);
+    _fadeIn(dramaticTrack, VOLUME, FADE_MS);
   }
 
   function playParty() {
     if (!partyTrack || !partyTrack.paused) return;
-    if (_hasActiveTracks(partyTrack)) {
-      _primePlay(partyTrack);
-      _stopAllTracksExcept(partyTrack).then(() =>
-        _fadeIn(partyTrack, VOLUME, FADE_MS)
-      );
-    } else {
-      _fadeIn(partyTrack, VOLUME, FADE_MS);
-    }
+    _primePlay(partyTrack);
+    _stopAllTracksExcept(partyTrack);
+    _fadeIn(partyTrack, VOLUME, FADE_MS);
   }
 
   function playInvestigation() {
     if (!investigationTrack) return;
     _primePlay(investigationTrack);
-    _stopAllTracksExcept(investigationTrack).then(() => {
-      _fadeIn(investigationTrack, VOLUME, FADE_MS);
-    });
+    _stopAllTracksExcept(investigationTrack);
+    _fadeIn(investigationTrack, VOLUME, FADE_MS);
   }
 
   /** Reveal / ending screen: fades out other BGM, then fades in (non-looping). */
@@ -141,9 +128,8 @@ const AudioManager = (function () {
     if (!revealTrack) return;
     revealTrack.currentTime = 0;
     _primePlay(revealTrack);
-    _stopAllTracksExcept(revealTrack).then(() => {
-      _fadeIn(revealTrack, VOLUME, FADE_MS);
-    });
+    _stopAllTracksExcept(revealTrack);
+    _fadeIn(revealTrack, VOLUME, FADE_MS);
   }
 
   function stopReveal() {
