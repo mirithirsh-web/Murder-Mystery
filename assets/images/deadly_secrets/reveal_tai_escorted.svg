@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-labelledby="t2">
+  <title id="t2">Two officers escorting a handcuffed man</title>
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e2433"/>
+      <stop offset="100%" style="stop-color:#12151c"/>
+    </linearGradient>
+    <radialGradient id="v" cx="50%" cy="45%" r="70%">
+      <stop offset="40%" style="stop-color:transparent"/>
+      <stop offset="100%" style="stop-color:#000"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bg2)"/>
+  <rect y="300" width="800" height="120" fill="#0d1015"/>
+  <circle cx="680" cy="80" r="36" fill="#e8e4dc" opacity="0.08"/>
+  <!-- Officer left -->
+  <g transform="translate(180, 95)">
+    <ellipse cx="70" cy="48" rx="22" ry="26" fill="#c4b8a8"/>
+    <rect x="48" y="78" width="44" height="8" rx="2" fill="#1a2744"/>
+    <path d="M52 88 L48 195 L62 200 L70 120 L78 200 L92 195 L88 88 Z" fill="#1e3050"/>
+    <rect x="40" y="95" width="60" height="75" rx="4" fill="#243a5c"/>
+    <rect x="25" y="168" width="22" height="55" rx="3" fill="#1a2744"/>
+    <rect x="93" y="168" width="22" height="55" rx="3" fill="#1a2744"/>
+    <rect x="5" y="118" width="100" height="14" rx="2" fill="#2a1810" opacity="0.5"/>
+  </g>
+  <!-- Suspect center, hands behind -->
+  <g transform="translate(340, 118)">
+    <ellipse cx="60" cy="38" rx="20" ry="24" fill="#d4c4b0"/>
+    <path d="M42 65 L38 188 L52 192 L60 115 L68 192 L82 188 L78 65 Z" fill="#3d3a45"/>
+    <rect x="35" y="68" width="50" height="70" rx="3" fill="#4a4652"/>
+    <path d="M85 95 Q110 105 108 130 Q106 145 88 138" fill="none" stroke="#c4b8a8" stroke-width="7" stroke-linecap="round"/>
+    <rect x="92" y="120" width="28" height="14" rx="3" fill="#6b7280" stroke="#9ca3af" stroke-width="2"/>
+  </g>
+  <!-- Officer right -->
+  <g transform="translate(500, 95)">
+    <ellipse cx="70" cy="48" rx="22" ry="26" fill="#c4b8a8"/>
+    <rect x="48" y="78" width="44" height="8" rx="2" fill="#1a2744"/>
+    <path d="M52 88 L48 195 L62 200 L70 120 L78 200 L92 195 L88 88 Z" fill="#1e3050"/>
+    <rect x="40" y="95" width="60" height="75" rx="4" fill="#243a5c"/>
+    <rect x="25" y="168" width="22" height="55" rx="3" fill="#1a2744"/>
+    <rect x="93" y="168" width="22" height="55" rx="3" fill="#1a2744"/>
+  </g>
+  <rect width="800" height="420" fill="url(#v)" opacity="0.25" pointer-events="none"/>
+</svg>

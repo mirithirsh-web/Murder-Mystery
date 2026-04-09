@@ -1,0 +1,402 @@
+{
+  "id": "midnight_train",
+  "title": "The Midnight Train to Constantinople",
+  "setting": "The Orient Express, snowbound between Belgrade and Sofia, January 1934",
+  "available_themes": ["cozy", "noir"],
+  "estimated_time": "15–25 min",
+  "images": {
+    "scene": "assets/images/midnight_train/scene_train_snow.png",
+    "dining_car": "assets/images/midnight_train/scene_dining_car.png",
+    "corridor": "assets/images/midnight_train/scene_corridor_night.png",
+    "crime_scene": "assets/images/midnight_train/scene_crime_scene.png",
+    "reveal": "assets/images/midnight_train/scene_reveal.png",
+    "clues": {
+      "hatpin_evidence": "assets/images/midnight_train/clue_hatpin.png",
+      "handkerchief_in_room": "assets/images/midnight_train/clue_handkerchief.png",
+      "threatening_letter": "assets/images/midnight_train/clue_burned_letter.png",
+      "ratchett_armed": "assets/images/midnight_train/clue_pistol.png",
+      "bolt_trick": "assets/images/midnight_train/clue_door_bolt.png",
+      "medical_findings": "assets/images/midnight_train/clue_stiletto.png"
+    }
+  },
+  "victim": {
+    "name": "Samuel Ratchett",
+    "description": "An American businessman, 58, found dead in his sleeping compartment at 7:00 AM. Stabbed once through the heart. The door was bolted from the inside and the window was latched.",
+    "portrait": "assets/images/midnight_train/portrait_ratchett.png"
+  },
+  "intro_narrative": "The snow came at midnight, and by two in the morning the Orient Express had ground to a halt somewhere in the mountains between Belgrade and Sofia. A deep drift across the tracks. No movement until the ploughs arrive — perhaps tomorrow, perhaps the day after.\n\nYou are travelling in the first-class sleeping car, returning from a conference in Istanbul. At seven o'clock this morning, the conductor knocked on Mr. Samuel Ratchett's door to deliver his morning coffee. No answer. The door was bolted from inside. When they finally broke it open, they found him in his berth — dead.\n\nOne stab wound to the heart. Clean, precise. The window was latched shut. The door was bolted. And yet someone entered this compartment, killed this man, and vanished like a ghost.\n\nFive passengers in the first-class car. One of them is a murderer. The snow has trapped you all together. There is nowhere to run.",
+  "accusation_options": {
+    "motives": ["revenge", "justice", "hired_killer", "inheritance", "silencing_a_witness", "personal_grudge"],
+    "methods": ["stiletto_knife", "letter_opener", "surgical_scalpel", "ice_pick", "penknife"]
+  },
+  "suspects": [
+    {
+      "id": "countess",
+      "name": "Countess Vera Andrescu",
+      "role": "Romanian Aristocrat",
+      "avatar": "👑",
+      "portrait": "assets/images/midnight_train/portrait_countess.png",
+      "detective_assignment": "A",
+      "dialogue_tree": {
+        "initial": {
+          "prompt": "The Countess sits in the dining car, impeccably dressed despite the early hour. She sips black coffee with an air of practiced indifference, but her eyes follow your every move.",
+          "choices": [
+            {
+              "text": "Did you know Mr. Ratchett?",
+              "response": "I have never spoken a word to the man. He boarded at Istanbul, as I understand it. An American. I confess I found him... vulgar. He attempted conversation at dinner and I declined. That is the extent of our acquaintance.",
+              "clue": {
+                "id": "countess_denial",
+                "text": "The Countess claims she never spoke to Ratchett and found him vulgar."
+              },
+              "unlocks": []
+            },
+            {
+              "text": "Where were you between midnight and 7 AM?",
+              "response": "In my compartment, of course. I took a sleeping draught at eleven — I am a poor sleeper on trains — and I did not wake until the conductor's commotion this morning. My door was locked all night. My maid, who sleeps in the second-class car, can confirm she brought me the draught.",
+              "clue": {
+                "id": "countess_alibi",
+                "text": "Countess took a sleeping draught at 11 PM. Claims she slept through the night. Her maid brought the draught."
+              },
+              "unlocks": []
+            },
+            {
+              "text": "That's a distinctive handkerchief. The initial 'A'?",
+              "response": "It is mine. Vera Andrescu — the A is for Andrescu. A family heirloom. My grandmother embroidered it. I hardly see how this is relevant to a murder investigation.",
+              "clue": {
+                "id": "countess_handkerchief",
+                "text": "Countess has a handkerchief embroidered with 'A' — says it stands for Andrescu."
+              },
+              "unlocks": ["ask_porter_handkerchief"]
+            },
+            {
+              "text": "I notice you're wearing deep mourning. Someone close to you passed away?",
+              "response": "My... my sister. She died two years ago. The circumstances were... tragic. I prefer not to speak of it. Please, Detective, can we discuss something else?",
+              "clue": {
+                "id": "countess_mourning",
+                "text": "The Countess is in mourning for a sister who died 2 years ago in 'tragic circumstances.' Very reluctant to discuss it."
+              },
+              "unlocks": ["ask_hardman_ratchett_identity"]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "colonel",
+      "name": "Colonel Arthur Doyle",
+      "role": "Retired British Officer",
+      "avatar": "🎖️",
+      "portrait": "assets/images/midnight_train/portrait_colonel.png",
+      "detective_assignment": "A",
+      "dialogue_tree": {
+        "initial": {
+          "prompt": "Colonel Doyle stands by the frosted window of the dining car, ramrod straight, his moustache waxed to points. He carries himself with military precision, but there's a weariness about him that no amount of posture can hide.",
+          "choices": [
+            {
+              "text": "What can you tell me about last night, Colonel?",
+              "response": "I retired to my compartment at ten-thirty. Read for an hour — Doyle, as it happens, The Hound of the Baskervilles. Fell asleep around midnight. I was woken once, at approximately one-fifteen, by a sound from the corridor. A bump, as if someone stumbled. I looked out but saw nothing. Went back to sleep.",
+              "clue": {
+                "id": "colonel_bump",
+                "text": "Colonel heard a bump in the corridor at approximately 1:15 AM. Looked out but saw nothing."
+              },
+              "unlocks": ["ask_porter_corridor"]
+            },
+            {
+              "text": "Did you know Mr. Ratchett?",
+              "response": "Never met the chap before boarding. Though I'll tell you something — I didn't like the look of him. Shifty eyes. And he was nervous at dinner. Kept looking over his shoulder. At one point he dropped his napkin and when he bent to pick it up, I saw a pistol tucked into his waistband. The man was frightened of someone.",
+              "clue": {
+                "id": "ratchett_armed",
+                "text": "Ratchett carried a concealed pistol. He was nervous at dinner, kept looking over his shoulder. He was afraid."
+              },
+              "unlocks": []
+            },
+            {
+              "text": "You served in India, Colonel?",
+              "response": "Thirty years. Punjab, Calcutta, the North-West Frontier. I've seen enough death to last several lifetimes. I know what a knife wound looks like, and I'll tell you — the wound on Ratchett was made by someone who knew anatomy. Clean, between the ribs, straight to the heart. That's not amateur work.",
+              "clue": {
+                "id": "professional_wound",
+                "text": "Colonel says the stab wound was precise — someone with anatomical knowledge. Not amateur work."
+              },
+              "unlocks": ["ask_rosenberg_medical"]
+            },
+            {
+              "text": "You mentioned the bump at 1:15. Did you hear anything else through the wall?",
+              "requires_clue": "colonel_bump",
+              "response": "Now that you press me — yes. At about half twelve, before the bump, I heard Ratchett's voice through the wall. He said something like 'It's you' or 'It was you.' As if he recognized whoever was in his compartment. Then silence. I thought nothing of it at the time.",
+              "clue": {
+                "id": "ratchett_recognized_killer",
+                "text": "Colonel heard Ratchett say 'It's you' or 'It was you' at 12:30 AM — he recognized his killer."
+              },
+              "unlocks": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "rosenberg",
+      "name": "Dr. Lena Rosenberg",
+      "role": "Austrian Physician",
+      "avatar": "👩‍⚕️",
+      "portrait": "assets/images/midnight_train/portrait_rosenberg.png",
+      "detective_assignment": "A",
+      "dialogue_tree": {
+        "initial": {
+          "prompt": "Dr. Rosenberg, mid-40s, sits with her medical bag beside her. She has the calm, measured demeanor of someone accustomed to emergencies, but her fingers drum the table in an uncharacteristic rhythm.",
+          "choices": [
+            {
+              "text": "You examined the body. What's your medical opinion?",
+              "response": "Single stab wound between the third and fourth ribs on the left side, piercing the heart. Death was nearly instantaneous. The weapon was thin and sharp — a stiletto or similar blade, approximately fifteen centimeters. Time of death, based on body temperature and rigor, was between midnight and two AM.",
+              "clue": {
+                "id": "medical_findings",
+                "text": "Single stab wound, thin sharp blade ~15cm (stiletto), death between midnight and 2 AM. Nearly instantaneous death."
+              },
+              "unlocks": []
+            },
+            {
+              "text": "Where were you during the night?",
+              "response": "In my compartment. I took notes on a medical paper I'm writing — I'm presenting at a conference in Paris. I worked until about one o'clock, then slept. I heard voices at some point — muffled, from the direction of Ratchett's compartment — but train travel is noisy. I thought nothing of it.",
+              "clue": {
+                "id": "rosenberg_voices",
+                "text": "Dr. Rosenberg heard muffled voices from Ratchett's direction around 1 AM while working on her paper."
+              },
+              "unlocks": []
+            },
+            {
+              "text": "The wound was precise — between the ribs, straight to the heart. You'd know how to do that, wouldn't you?",
+              "requires_clue": "medical_findings",
+              "response": "As does any butcher, soldier, or medical student. I'm a physician — I save lives. But yes, I understand anatomy, and yes, I could theoretically inflict such a wound. I could also set a bone or deliver a baby. Capability is not guilt, Detective.",
+              "clue": {
+                "id": "rosenberg_capability",
+                "text": "Dr. Rosenberg admits she has the anatomical knowledge to make such a precise wound."
+              },
+              "unlocks": []
+            },
+            {
+              "text": "I've heard the name Novak mentioned in connection with this case. Is Rosenberg your married name, Doctor?",
+              "requires_clue": "threatening_letter",
+              "response": "It was my husband's name, yes. He died five years ago. Before my marriage, my name was... I was Lena Novak. From Prague. Why do you ask? What does my maiden name have to do with anything?",
+              "clue": {
+                "id": "rosenberg_maiden_name",
+                "text": "Dr. Rosenberg's maiden name is Novak. From Prague. She became defensive when asked."
+              },
+              "unlocks": ["ask_hardman_novak"]
+            }
+          ]
+        },
+        "ask_rosenberg_medical": {
+          "prompt": "You press Dr. Rosenberg about the precision of the wound.",
+          "choices": [
+            {
+              "text": "The Colonel says only someone with anatomical training could have made that wound. Could a layperson have managed it?",
+              "response": "Truthfully? No. The blade entered at precisely the correct angle and depth to reach the heart between the ribs. An untrained person would more likely strike a rib and deflect. This was someone who has either studied medicine or who has killed with a blade before. I can think of only two people on this train with such knowledge — myself, and the Colonel, who has seen combat.",
+              "clue": {
+                "id": "trained_killer",
+                "text": "Dr. Rosenberg confirms only someone with medical training or combat experience could have made the wound. Points to herself or the Colonel."
+              },
+              "unlocks": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "hardman",
+      "name": "Cyrus Hardman",
+      "role": "American Private Detective",
+      "avatar": "🕵️",
+      "portrait": "assets/images/midnight_train/portrait_hardman.png",
+      "detective_assignment": "B",
+      "dialogue_tree": {
+        "initial": {
+          "prompt": "Hardman is a broad-shouldered American in a rumpled suit. He chews on an unlit cigar and eyes you with professional appraisal. There's a shoulder holster visible under his jacket.",
+          "choices": [
+            {
+              "text": "You're carrying a weapon, Mr. Hardman.",
+              "response": "I'm a private detective. Licensed in the state of New York. The gun is a professional necessity. And before you ask — no, Ratchett wasn't killed with a gun. I know what a bullet hole looks like, and that ain't one.",
+              "clue": {
+                "id": "hardman_armed",
+                "text": "Hardman is a licensed PI from New York carrying a pistol. Confirms Ratchett wasn't shot."
+              },
+              "unlocks": []
+            },
+            {
+              "text": "Why are you on this train?",
+              "response": "Ratchett hired me. Three days ago in Istanbul. Said he'd been receiving threatening letters and he feared for his life. He wanted a bodyguard for the journey. I was in the next compartment — I was supposed to be watching his door. But I fell asleep around one o'clock. Some bodyguard, huh?",
+              "clue": {
+                "id": "hardman_hired",
+                "text": "Ratchett HIRED Hardman as a bodyguard. He'd been receiving threats. Hardman fell asleep at 1 AM."
+              },
+              "unlocks": []
+            },
+            {
+              "text": "You said Ratchett was receiving threats. Did you actually see any of the letters?",
+              "requires_clue": "hardman_hired",
+              "response": "He showed me one. Typed on cheap paper. It said: 'You will pay for what you did to the Novak family. Justice is coming.' He burned it in the ashtray. I tried to ask him about the Novak family but he clammed up. Got real pale. Said it was 'ancient history.'",
+              "clue": {
+                "id": "threatening_letter",
+                "text": "Ratchett received a threat: 'You will pay for what you did to the Novak family. Justice is coming.' He burned it. Called it 'ancient history.'"
+              },
+              "unlocks": ["ask_porter_ratchett_past"]
+            },
+            {
+              "text": "Did you see or hear anything useful during the night?",
+              "response": "I kept watch until about one AM. At twelve-forty, I saw someone in the corridor — just a shape, moving quickly from the direction of Ratchett's compartment toward the rear of the car. They were wearing a dark coat — could have been a man or a woman, I couldn't tell. Then I fell asleep in my chair like a damned fool.",
+              "clue": {
+                "id": "corridor_figure",
+                "text": "At 12:40 AM, Hardman saw a dark-coated figure moving quickly from Ratchett's direction toward the rear of the car."
+              },
+              "unlocks": []
+            }
+          ]
+        },
+        "ask_hardman_ratchett_identity": {
+          "prompt": "You ask Hardman about Ratchett's true identity.",
+          "choices": [
+            {
+              "text": "I have reason to believe Ratchett isn't his real name. What do you know?",
+              "response": "You're sharp. Yeah, I did some digging before I took the job — it's what I do. Samuel Ratchett is really Cassian Renault. Ten years ago he was the accountant for a wealthy Prague family — the Novaks. He embezzled their entire fortune, every penny. The father killed himself. The mother died of grief six months later. There was a daughter — Helena — who vanished. And a sister of the mother, a Countess from Romania, who swore she would see justice done. The police could never prove Renault's involvement. He changed his name and fled to America.",
+              "clue": {
+                "id": "ratchett_true_identity",
+                "text": "Ratchett is really Cassian Renault who embezzled the Novak family fortune 10 years ago. Father killed himself, mother died of grief. Daughter Helena vanished. A Romanian Countess aunt swore justice."
+              },
+              "unlocks": []
+            }
+          ]
+        },
+        "ask_hardman_novak": {
+          "prompt": "You mention the name Novak to Hardman.",
+          "choices": [
+            {
+              "text": "Does the name Novak mean anything to you in connection with Ratchett?",
+              "response": "Novak? That's the name from the threatening letter. 'You will pay for what you did to the Novak family.' I told you — Ratchett went white when I asked about it. If someone on this train is connected to the Novak family... that changes everything. That's not a robbery gone wrong. That's revenge. Cold, premeditated revenge.",
+              "clue": {
+                "id": "novak_connection",
+                "text": "Hardman confirms the Novak name was in the threats. If someone on the train is connected to the Novaks, the murder was premeditated revenge."
+              },
+              "unlocks": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "porter",
+      "name": "Pierre Michel",
+      "role": "The Sleeping Car Conductor",
+      "avatar": "🧑‍✈️",
+      "portrait": "assets/images/midnight_train/portrait_porter.png",
+      "detective_assignment": "B",
+      "dialogue_tree": {
+        "initial": {
+          "scene_image": "assets/images/midnight_train/scene_corridor_night.png",
+          "prompt": "Pierre Michel, the sleeping car conductor, is visibly shaken. He paces the corridor, tugging at his uniform collar. He has worked the Orient Express for twelve years and has never had a passenger die on his watch.",
+          "choices": [
+            {
+              "text": "Walk me through what happened this morning.",
+              "response": "I brought coffee to each compartment at seven, as is the routine. When I reached Mr. Ratchett's door, I knocked three times. No answer. I tried the handle — bolted from inside. I called the chef de train. We used the service key to unlock, but the bolt — the internal bolt — was still engaged. We had to force the door. He was in bed, on his back, with... with the blood.",
+              "clue": {
+                "id": "locked_compartment",
+                "text": "Ratchett's compartment was bolted from inside. Even the service key couldn't open it. They had to force the door."
+              },
+              "unlocks": []
+            },
+            {
+              "text": "Did you notice anything during the night?",
+              "response": "I was at my station at the end of the corridor all night. At twelve-thirty, Ratchett rang his bell. I went to his door. He said through the door, in French, 'Ce n'est rien. Je me suis trompé' — 'It is nothing. I made a mistake.' I returned to my seat. At about one-fifteen, someone rang the bell again — this time from the Countess's compartment. But when I went, she was asleep. Or appeared to be.",
+              "clue": {
+                "id": "porter_bells",
+                "text": "At 12:30 AM Ratchett rang his bell and dismissed the porter in French. At 1:15 the Countess's bell rang but she appeared asleep."
+              },
+              "unlocks": []
+            },
+            {
+              "text": "Who passed through the corridor during the night?",
+              "response": "After midnight, I saw Dr. Rosenberg go to the lavatory at about twelve-fifteen and return ten minutes later. At twelve-forty — or perhaps twelve-forty-five — I dozed off briefly. I'm ashamed to say it. I woke when I heard a door close — perhaps fifteen minutes later. I cannot swear who it was. But I found this on the floor of the corridor this morning.",
+              "clue": {
+                "id": "porter_dozed",
+                "text": "Porter dozed off at ~12:40 AM and woke to a door closing ~15 min later. Dr. Rosenberg used the lavatory at 12:15. Porter found something on the corridor floor."
+              },
+              "unlocks": ["ask_porter_evidence"]
+            },
+            {
+              "text": "Is the compartment bolt something a person could lock from outside?",
+              "response": "Not... normally. The bolt is only operable from inside. But there is a trick — if you wedge a wire through the door crack at the right angle, you can push the bolt closed. I've seen maintenance workers do it. It requires a thin, stiff wire and some skill. A hatpin would work perfectly.",
+              "clue": {
+                "id": "bolt_trick",
+                "text": "The inside bolt CAN be locked from outside using a thin wire or hatpin threaded through the door crack."
+              },
+              "unlocks": []
+            }
+          ]
+        },
+        "ask_porter_evidence": {
+          "prompt": "Pierre produces a small item wrapped in his handkerchief.",
+          "choices": [
+            {
+              "text": "What did you find on the corridor floor?",
+              "response": "This. A woman's hatpin — long, sharp, with a small pearl at the end. It was on the carpet just outside Ratchett's door. And look — there's something dark on the tip. Not blood — it's the same colour as the bolt grease on the compartment doors. Someone used this hatpin to bolt Ratchett's door from outside after the murder.",
+              "clue": {
+                "id": "hatpin_evidence",
+                "text": "A pearl-tipped hatpin was found outside Ratchett's door with bolt grease on the tip. Used to lock the bolt from outside after the murder."
+              },
+              "unlocks": []
+            }
+          ]
+        },
+        "ask_porter_handkerchief": {
+          "prompt": "You ask Pierre about the Countess's handkerchief.",
+          "choices": [
+            {
+              "text": "The Countess has a handkerchief embroidered with 'A'. Anything strike you about that?",
+              "response": "Curious you should mention it. When I entered Ratchett's compartment this morning, I found a handkerchief under the bed — also embroidered with the letter 'A'. I assumed it belonged to the victim. But now you say the Countess has one just like it? The Countess's compartment is at the far end of the car — far from Ratchett's. Why would her handkerchief be under his bed?",
+              "clue": {
+                "id": "handkerchief_in_room",
+                "text": "A handkerchief embroidered with 'A' was found UNDER Ratchett's bed. Matches the Countess's handkerchief."
+              },
+              "unlocks": []
+            }
+          ]
+        },
+        "ask_porter_corridor": {
+          "prompt": "You ask Pierre about corridor activity matching the Colonel's account.",
+          "choices": [
+            {
+              "text": "The Colonel heard a bump at 1:15. You say a bell rang from the Countess's compartment around then. Connection?",
+              "response": "Mon Dieu — you're right. The timing matches. The bump the Colonel heard could have been someone returning to the Countess's compartment and stumbling in the dark corridor. The bell could have been accidentally pressed. If the Countess was truly asleep from her sleeping draught, then someone ELSE was in her compartment at 1:15. Someone who had just come from... elsewhere.",
+              "clue": {
+                "id": "countess_compartment_intruder",
+                "text": "Someone may have entered the Countess's compartment at 1:15 AM, causing the bump and accidentally ringing the bell. The Countess was supposedly drugged asleep."
+              },
+              "unlocks": []
+            }
+          ]
+        },
+        "ask_porter_ratchett_past": {
+          "prompt": "You ask Pierre about Ratchett's background.",
+          "choices": [
+            {
+              "text": "Did Ratchett say anything to you about his past or the name Novak?",
+              "response": "He was not a talkative man. But on the first evening, he had too much wine at dinner and said something strange. He said, 'The past always catches up, Pierre. I ruined good people and now the bill is due.' I thought he was being philosophical. He tipped me fifty francs and told me to keep his compartment door locked at all times. He was terrified, monsieur.",
+              "clue": {
+                "id": "ratchett_confession",
+                "text": "Ratchett drunkenly told the porter: 'I ruined good people and now the bill is due.' He was terrified and insisted on keeping his door locked."
+              },
+              "unlocks": []
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "solution": {
+    "culprit": "countess",
+    "motive": "revenge",
+    "method": "stiletto_knife",
+    "accusation_profile": {
+      "had_motive_vs_meredith": ["countess", "rosenberg", "hardman"],
+      "had_opportunity": ["countess", "colonel", "rosenberg", "hardman", "porter"]
+    },
+    "reveal_narrative": "You ask the passengers to remain in the dining car. The snow swirls outside the frosted windows as you lay out the evidence.\n\n'Samuel Ratchett was not who he claimed to be. His real name was Cassian Renault — a man who, ten years ago, embezzled the entire fortune of the Novak family in Prague. The father took his own life. The mother died of grief. Their daughter Helena vanished.'\n\nThe Countess's coffee cup rattles against its saucer.\n\n'Dr. Rosenberg — your maiden name is Novak. Helena Novak. The vanished daughter.'\n\nDr. Rosenberg's composure breaks. Tears stream down her face but she says nothing.\n\n'You recognized Ratchett when you boarded at Istanbul. The man who destroyed your family was sitting three compartments away. You wrote the threatening letters. But you didn't wield the knife.'\n\nYou turn to the Countess. 'Countess Andrescu — your sister was Mrs. Novak, Helena's mother. You have been in mourning not just for your sister, but for the justice that was never served. When Helena contacted you and told you Renault was on this train... you saw your chance.'\n\n'At half past midnight, you went to Ratchett's compartment. He opened the door — and he recognized you. \"It's you,\" the Colonel heard him say. You carried a stiletto — thin, sharp, the kind that slides between ribs if you know where to aim. And you knew. Your late husband was a military surgeon. You'd watched him demonstrate on anatomical models a hundred times.'\n\n'After the killing, you bolted his door from outside using a hatpin — a trick you learned from watching the porter maintain the locks. You returned to your compartment, stumbling in the dark corridor at 1:15 — the bump the Colonel heard — and accidentally pressed your call bell. You feigned sleep when Pierre came to check.'\n\n'Your handkerchief, embroidered with your initial, was found under Ratchett's bed. You dropped it in the dark.'\n\nThe Countess sets down her coffee cup with perfect poise. 'He destroyed my sister. He destroyed her husband. He destroyed their child's life. The law did nothing. For ten years, nothing. Yes, Detective. I killed Cassian Renault. And I would do it again.'\n\nThe snow continues to fall. The Orient Express sits silent on the frozen tracks. Justice — of one kind or another — has been served."
+  }
+}

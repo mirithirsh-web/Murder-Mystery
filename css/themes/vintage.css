@@ -1,0 +1,76 @@
+/* ============================================
+   VINTAGE THEME — 1920s art deco, cream/sepia
+   ============================================ */
+
+body.theme-vintage {
+  --bg:            #f5efe0;
+  --surface:       #ebe3cf;
+  --surface-active: #e0d6bb;
+  --text:          #2c2418;
+  --text-muted:    #7a6e5d;
+  --accent:        #8b6914;
+  --accent-hover:  #a37c1a;
+  --accent-text:   #f5efe0;
+  --border:        #c9b88a;
+  --shadow:        rgba(139, 105, 20, 0.15);
+  --danger:        #8b1a1a;
+  --danger-hover:  #a82222;
+  --success:       #2d6a3f;
+  --radius:        2px;
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', -apple-system, sans-serif;
+}
+
+body.theme-vintage .title-decoration {
+  height: 3px;
+  background: var(--accent);
+  position: relative;
+}
+
+body.theme-vintage .title-decoration::before,
+body.theme-vintage .title-decoration::after {
+  content: '◆';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent);
+  font-size: 0.7rem;
+}
+
+body.theme-vintage .title-decoration::before { left: -1rem; }
+body.theme-vintage .title-decoration::after  { right: -1rem; }
+
+body.theme-vintage .game-title {
+  font-style: italic;
+}
+
+body.theme-vintage .btn {
+  border-width: 1px;
+  text-transform: none;
+  letter-spacing: 0.1em;
+}
+
+body.theme-vintage .narrative-text {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.05rem;
+}
+
+body.theme-vintage .suspect-card {
+  border-width: 1px;
+}
+
+body.theme-vintage .dialogue-panel {
+  border-width: 1px;
+}
+
+body.theme-vintage .notebook-panel {
+  background: #ebe3cf;
+  background-image:
+    repeating-linear-gradient(
+      transparent,
+      transparent 27px,
+      #c9b88a44 27px,
+      #c9b88a44 28px
+    );
+}

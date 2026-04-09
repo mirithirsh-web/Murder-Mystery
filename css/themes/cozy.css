@@ -1,0 +1,71 @@
+/* ============================================
+   COZY THEME — Warm pastels, rounded, friendly
+   ============================================ */
+
+body.theme-cozy {
+  --bg:            #fdf6ee;
+  --surface:       #fff;
+  --surface-active: #fef0dd;
+  --text:          #3d2e1e;
+  --text-muted:    #9a8574;
+  --accent:        #c0603c;
+  --accent-hover:  #d4714d;
+  --accent-text:   #fff;
+  --border:        #e6d5c3;
+  --shadow:        rgba(192, 96, 60, 0.12);
+  --danger:        #b83030;
+  --danger-hover:  #d04040;
+  --success:       #3a8a5c;
+  --radius:        12px;
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', -apple-system, sans-serif;
+}
+
+body.theme-cozy .title-decoration {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), #e8a87c, var(--accent));
+}
+
+body.theme-cozy .btn {
+  border-radius: 999px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+body.theme-cozy .scenario-card {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+body.theme-cozy .scenario-card:hover {
+  box-shadow: 0 8px 24px rgba(192, 96, 60, 0.15);
+}
+
+body.theme-cozy .suspect-card {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border-width: 1px;
+}
+
+body.theme-cozy .suspect-card:hover {
+  box-shadow: 0 8px 20px rgba(192, 96, 60, 0.15);
+}
+
+body.theme-cozy .narrative-text {
+  border-left: 4px solid #e8a87c;
+  border-radius: 12px;
+}
+
+body.theme-cozy .notebook-panel {
+  box-shadow: -4px 0 20px rgba(0,0,0,0.06);
+}
+
+body.theme-cozy .dialogue-panel {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  border-width: 1px;
+}
+
+body.theme-cozy .dialogue-choice {
+  border-radius: 999px;
+  text-align: center;
+}

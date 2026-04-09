@@ -1,0 +1,221 @@
+/* ============================================
+   RTL Overrides — Active when dir="rtl" on <html>
+   ============================================ */
+
+[dir="rtl"] body {
+  font-family: 'Heebo', 'Segoe UI', Tahoma, 'Arial Hebrew', var(--font-body), sans-serif;
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3 {
+  font-family: 'Heebo', 'Segoe UI', Tahoma, 'Arial Hebrew', var(--font-heading), sans-serif;
+}
+
+/* ---- Text alignment ---- */
+
+[dir="rtl"] .scenario-card {
+  text-align: right;
+}
+
+[dir="rtl"] .narrative-text {
+  text-align: right;
+  border-left: none;
+  border-right: 4px solid var(--accent);
+}
+
+[dir="rtl"] .dialogue-response {
+  border-left: none;
+  border-right: 3px solid var(--accent);
+}
+
+[dir="rtl"] .dialogue-choice {
+  text-align: right;
+}
+
+[dir="rtl"] .dialogue-choice:hover {
+  padding-left: 1.2rem;
+  padding-right: 1.6rem;
+}
+
+[dir="rtl"] .accusation-form {
+  text-align: right;
+}
+
+[dir="rtl"] .reveal-narrative {
+  text-align: right;
+  border-left: none;
+  border-right: 4px solid var(--accent);
+}
+
+[dir="rtl"] .reveal-breakdown {
+  text-align: right;
+}
+
+/* ---- Suspect badge position ---- */
+
+[dir="rtl"] .suspect-card .suspect-badge {
+  right: auto;
+  left: 0.5rem;
+}
+
+/* ---- NEW pill on dialogue choices ---- */
+
+[dir="rtl"] .dialogue-choice.new-lead::before {
+  right: auto;
+  left: 0.6rem;
+}
+
+/* ---- Notebook panel ---- */
+
+[dir="rtl"] .notebook-body {
+  padding-right: 0;
+  padding-left: 0.3rem;
+}
+
+[dir="rtl"] .nb-section-body {
+  padding-left: 0;
+  padding-right: 2.8rem;
+}
+
+[dir="rtl"] .nb-secret-reveal {
+  border-left: none;
+  border-right: 3px solid var(--accent);
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+[dir="rtl"] .btn-audio-float {
+  right: auto;
+  left: 1.2rem;
+}
+
+[dir="rtl"] .notebook-panel.open {
+  animation: notebookSlideRtl 0.3s ease;
+}
+
+@keyframes notebookSlideRtl {
+  from { transform: translateX(-20px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* ---- Back buttons (flip arrows) ---- */
+
+[dir="rtl"] #btn-back-to-intro {
+  transform: scaleX(-1);
+}
+
+/* ---- Investigation header ---- */
+
+[dir="rtl"] .investigation-header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .investigation-actions {
+  flex-direction: row-reverse;
+}
+
+/* ---- Dialogue header ---- */
+
+[dir="rtl"] .dialogue-header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .suspect-info {
+  flex-direction: row-reverse;
+}
+
+/* ---- Breakdown items ---- */
+
+[dir="rtl"] .breakdown-item {
+  flex-direction: row-reverse;
+}
+
+/* ---- Language toggle ---- */
+
+.lang-toggle {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.lang-btn {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  padding: 0.4rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  background: var(--surface);
+  color: var(--text);
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.lang-btn:hover {
+  border-color: var(--accent);
+}
+
+.lang-btn.active {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+
+/* ---- Murder event & cold case ---- */
+
+[dir="rtl"] .murder-event-container .narrative-text {
+  text-align: right;
+  border-left: none;
+  border-right: 4px solid var(--accent);
+}
+
+[dir="rtl"] .cold-case-narrative {
+  text-align: right;
+  border-left: none;
+  border-right: 3px solid var(--accent);
+}
+
+/* ---- Toast RTL ---- */
+
+[dir="rtl"] .toast-stack {
+  right: auto;
+  left: 1.25rem;
+  align-items: flex-start;
+}
+
+[dir="rtl"] .clue-toast {
+  text-align: right;
+  animation-name: toastEnterRtl;
+}
+
+[dir="rtl"] .clue-toast.toast-dismissing {
+  animation-name: toastExitRtl;
+}
+
+@keyframes toastEnterRtl {
+  from {
+    opacity: 0;
+    transform: translateX(-110%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toastExitRtl {
+  to {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+}
+
+/* ---- Mobile RTL adjustments ---- */
+
+@media (max-width: 768px) {
+  [dir="rtl"] .notebook-panel {
+    left: 0;
+    right: 0;
+  }
+}

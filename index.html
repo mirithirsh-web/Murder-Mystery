@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Murder Mystery Detective</title>
+  <meta name="description" content="An Agatha Christie-style whodunit detective game">
+  <meta name="theme-color" content="#0d0d0d">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Special+Elite&family=Courier+Prime:wght@400;700&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/themes/noir.css">
+  <link rel="stylesheet" href="css/themes/vintage.css">
+  <link rel="stylesheet" href="css/themes/cozy.css">
+  <link rel="stylesheet" href="css/themes/minimal.css">
+  <link rel="stylesheet" href="css/rtl.css">
+</head>
+<body class="theme-cozy">
+
+  <!-- TITLE SCREEN -->
+  <div id="screen-title" class="screen active">
+    <div class="title-container">
+      <button id="btn-audio-toggle-title" class="btn btn-icon btn-audio-toggle btn-audio-float" title="Toggle music" data-i18n-title="toggle_music">🔊</button>
+      <div class="title-decoration top"></div>
+      <h1 class="game-title"><span data-i18n="game_title_1">Murder Mystery</span><br><span class="subtitle" data-i18n="game_title_2">Detective</span></h1>
+      <p class="tagline" data-i18n="tagline">An Agatha Christie-style whodunit</p>
+      <div class="title-decoration bottom"></div>
+
+      <div class="title-menu">
+        <div class="menu-section">
+          <h2 data-i18n="select_case">Select a Case</h2>
+          <div id="scenario-list" class="scenario-cards"></div>
+        </div>
+
+        <div class="menu-section settings-row">
+          <div class="settings-group">
+            <h2 data-i18n="visual_style">Visual Style</h2>
+            <div class="theme-selector">
+              <button class="theme-btn active" data-theme="cozy">Cozy</button>
+              <button class="theme-btn" data-theme="noir">Noir</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-section hidden">
+          <h2 data-i18n="mode">Mode</h2>
+          <div class="mode-selector">
+            <button class="mode-btn active" data-mode="solo">
+              <span class="mode-icon">🔍</span>
+              <span class="mode-label" data-i18n="solo">Solo Detective</span>
+            </button>
+            <button class="mode-btn" data-mode="coop">
+              <span class="mode-icon">🔍🔍</span>
+              <span class="mode-label" data-i18n="two_detectives">Two Detectives</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="coop-setup" class="menu-section coop-options hidden">
+          <h2 data-i18n="coop_setup">Co-op Setup</h2>
+          <div class="coop-controls">
+            <button id="btn-create-game" class="btn btn-secondary" data-i18n="create_game_code">Create Game Code</button>
+            <div class="divider-text" data-i18n="or">or</div>
+            <div class="join-game">
+              <input type="text" id="input-game-code" placeholder="Enter game code" data-i18n-placeholder="enter_game_code" maxlength="6" autocomplete="off">
+              <button id="btn-join-game" class="btn btn-secondary" data-i18n="join">Join</button>
+            </div>
+          </div>
+          <div id="coop-status" class="coop-status hidden"></div>
+          <div id="detective-role" class="detective-role hidden">
+            <button class="role-btn" data-role="A" data-i18n="detective_a">Detective A</button>
+            <button class="role-btn" data-role="B" data-i18n="detective_b">Detective B</button>
+          </div>
+        </div>
+
+        <button id="btn-start" class="btn btn-primary btn-large" disabled data-i18n="begin_investigation">Begin Investigation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO SCREEN -->
+  <div id="screen-intro" class="screen">
+    <div class="intro-container">
+      <button id="btn-audio-toggle-intro" class="btn btn-icon btn-audio-toggle btn-audio-float" title="Toggle music" data-i18n-title="toggle_music">🔊</button>
+      <div id="intro-scene-image" class="scene-image hidden"></div>
+      <div class="intro-header">
+        <h2 id="intro-title" class="case-title"></h2>
+        <p id="intro-setting" class="case-setting"></p>
+        <div id="intro-time" class="case-time hidden"></div>
+      </div>
+      <div id="intro-narrative" class="narrative-text"></div>
+      <div id="intro-crime-scene" class="scene-image crime-scene-image hidden"></div>
+      <div id="intro-narrative-after" class="narrative-text"></div>
+      <div id="intro-victim" class="victim-card">
+        <h3 data-i18n="the_victim">The Victim</h3>
+        <div id="victim-portrait" class="victim-portrait hidden"></div>
+        <p id="victim-name" class="victim-name"></p>
+        <p id="victim-desc" class="victim-description"></p>
+      </div>
+      <div class="intro-actions">
+        <button id="btn-back-to-title" class="btn btn-secondary" data-i18n="back_to_cases">Back to Case Selection</button>
+        <button id="btn-restart-case" class="btn btn-secondary hidden" data-i18n="restart_case">Restart Case</button>
+        <button id="btn-begin-investigation" class="btn btn-primary btn-large" data-i18n="begin_investigation">Begin Investigation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVESTIGATION SCREEN -->
+  <div id="screen-investigation" class="screen">
+    <div class="investigation-layout">
+      <!-- Suspect / Location Panel -->
+      <div class="investigation-main">
+        <div class="investigation-header">
+          <button id="btn-back-to-intro" class="btn btn-icon" title="Back to case overview" data-i18n-title="back_to_case_overview">←</button>
+          <h2 id="investigation-title" class="case-title-small"></h2>
+          <div class="investigation-actions">
+            <button id="btn-audio-toggle" class="btn btn-icon btn-audio-toggle" title="Toggle music" data-i18n-title="toggle_music">🔊</button>
+            <button id="btn-notebook-toggle" class="btn btn-icon" title="Notebook" data-i18n-title="notebook">📓</button>
+            <button id="btn-proceed-to-event" class="btn btn-accent hidden" data-i18n="proceed_to_toast">Proceed to the Toast</button>
+            <button id="btn-make-accusation" class="btn btn-accent" data-i18n="make_accusation">Make Accusation</button>
+            <button id="btn-cold-case-accusation" class="btn btn-secondary hidden" data-i18n="solve_cold_case">Solve Cold Case</button>
+          </div>
+        </div>
+
+        <div id="investigation-scene-image" class="scene-image investigation-banner hidden"></div>
+        <div id="suspect-grid" class="suspect-grid"></div>
+
+        <!-- Dialogue Panel (hidden until suspect clicked) -->
+        <div id="dialogue-panel" class="dialogue-panel hidden">
+          <div class="dialogue-header">
+            <div class="suspect-info">
+              <h3 id="dialogue-suspect-name"></h3>
+              <p id="dialogue-suspect-role" class="suspect-role-label"></p>
+            </div>
+            <button id="btn-close-dialogue" class="btn btn-icon" title="Back to suspects" data-i18n-title="back_to_suspects">✕</button>
+          </div>
+          <div id="dialogue-prompt" class="dialogue-prompt"></div>
+          <div id="dialogue-response" class="dialogue-response hidden"></div>
+          <div id="dialogue-choices" class="dialogue-choices"></div>
+          <button id="btn-back-to-questions" class="btn btn-secondary hidden" data-i18n="ask_another">Ask another question</button>
+        </div>
+      </div>
+
+      <!-- Notebook Sidebar -->
+      <div id="notebook-panel" class="notebook-panel">
+        <div class="notebook-header">
+          <h3 data-i18n="detectives_notebook">Detective's Notebook</h3>
+          <button id="btn-notebook-close" class="btn btn-icon">✕</button>
+        </div>
+        <div id="notebook-body" class="notebook-body">
+          <p class="notebook-empty" data-i18n="no_clues">No clues gathered yet. Start interviewing suspects.</p>
+        </div>
+        <div class="notebook-footer">
+          <span id="clue-count">0</span> <span data-i18n="clues_gathered">clues gathered</span>
+          <span class="notebook-footer-sep">·</span>
+          <span id="secrets-count">0</span> / <span id="secrets-total">0</span> <span data-i18n="secrets_label">secrets</span>
+          <div class="notebook-footer-hint" data-i18n="secrets_notebook_hint"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MURDER EVENT SCREEN (two-phase scenarios) -->
+  <div id="screen-murder-event" class="screen">
+    <div class="murder-event-container">
+      <button id="btn-audio-toggle-event" class="btn btn-icon btn-audio-toggle btn-audio-float" title="Toggle music" data-i18n-title="toggle_music">🔊</button>
+      <div id="murder-event-narrative" class="narrative-text typewriter"></div>
+      <div class="murder-event-actions">
+        <button id="btn-begin-post-investigation" class="btn btn-primary btn-large" data-i18n="begin_investigation_post">Begin Investigation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLD CASE ACCUSATION SCREEN -->
+  <div id="screen-cold-case-accusation" class="screen">
+    <div class="accusation-container">
+      <h2 data-i18n="cold_case_title">The Cold Case</h2>
+      <p id="cold-case-victim-desc" class="accusation-subtitle"></p>
+      <div id="cold-case-step-container" class="accusation-step-container"></div>
+      <div class="accusation-actions">
+        <button id="btn-cancel-cold-case" class="btn btn-secondary" data-i18n="back_to_investigation">Back to Investigation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCUSATION SCREEN -->
+  <div id="screen-accusation" class="screen">
+    <div class="accusation-container">
+      <h2 data-i18n="accusation_title">Make Your Accusation</h2>
+      <p class="accusation-subtitle" data-i18n="accusation_subtitle">Piece together what happened to Meredith.</p>
+      <div id="accusation-step-container" class="accusation-step-container"></div>
+      <div class="accusation-actions">
+        <button id="btn-cancel-accusation" class="btn btn-secondary" data-i18n="back_to_investigation">Back to Investigation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVEAL SCREEN -->
+  <div id="screen-reveal" class="screen">
+    <div class="reveal-container">
+      <button id="btn-audio-toggle-reveal" type="button" class="btn btn-icon btn-audio-toggle btn-audio-float" title="Toggle music" data-i18n-title="toggle_music">🔊</button>
+      <div id="reveal-result" class="reveal-result"></div>
+      <div id="reveal-score" class="reveal-score"></div>
+      <div id="reveal-narrative" class="reveal-narrative"></div>
+      <div id="reveal-breakdown" class="reveal-breakdown"></div>
+      <div class="reveal-actions">
+        <button id="btn-play-again" class="btn btn-primary btn-large" data-i18n="play_another">Back to Case Selection</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/state_manager.js"></script>
+  <script src="js/scenario_loader.js"></script>
+  <script src="js/ui_renderer.js"></script>
+  <script src="js/audio_manager.js"></script>
+  <script src="js/accusation.js"></script>
+  <script src="js/game_engine.js"></script>
+</body>
+</html>

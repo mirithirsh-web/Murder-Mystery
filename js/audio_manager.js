@@ -1,0 +1,164 @@
+const AudioManager = (function () {
+  const FADE_MS = 2000;
+  const VOLUME = 0.4;
+  const STORAGE_KEY = 'mm_audio_muted';
+
+  let dramaticTrack = null;
+  let partyTrack = null;
+  let investigationTrack = null;
+  let revealTrack = null;
+  let muted = false;
+
+  function _createTrack(src, loop = true) {
+    const audio = new Audio(src);
+    audio.loop = loop;
+    audio.volume = 0;
+    audio.preload = 'auto';
+    return audio;
+  }
+
+  function init(dramaticUrl, partyUrl, investigationUrl, revealUrl) {
+    dramaticTrack = _createTrack(dramaticUrl);
+    partyTrack = _createTrack(partyUrl);
+    investigationTrack = _createTrack(investigationUrl);
+    revealTrack = revealUrl ? _createTrack(revealUrl, false) : null;
+    muted = localStorage.getItem(STORAGE_KEY) === '1';
+  }
+
+  function _fadeIn(track, targetVol, durationMs) {
+    if (!track) return;
+    track.volume = 0;
+    if (muted) track.muted = true;
+    track.play().catch(() => {});
+    const steps = 30;
+    const stepMs = durationMs / steps;
+    const increment = targetVol / steps;
+    let current = 0;
+    const iv = setInterval(() => {
+      current += increment;
+      if (current >= targetVol) {
+        track.volume = targetVol;
+        clearInterval(iv);
+      } else {
+        track.volume = current;
+      }
+    }, stepMs);
+    return iv;
+  }
+
+  function _fadeOut(track, durationMs) {
+    return new Promise(resolve => {
+      if (!track || track.paused) { resolve(); return; }
+      const startVol = track.volume;
+      if (startVol === 0) { track.pause(); resolve(); return; }
+      const steps = 30;
+      const stepMs = durationMs / steps;
+      const decrement = startVol / steps;
+      let current = startVol;
+      const iv = setInterval(() => {
+        current -= decrement;
+        if (current <= 0) {
+          track.volume = 0;
+          track.pause();
+          track.currentTime = 0;
+          clearInterval(iv);
+          resolve();
+        } else {
+          track.volume = current;
+        }
+      }, stepMs);
+    });
+  }
+
+  function _stopAllTracks() {
+    const promises = [];
+    [dramaticTrack, partyTrack, investigationTrack, revealTrack].forEach(t => {
+      if (t && !t.paused) promises.push(_fadeOut(t, FADE_MS));
+    });
+    return Promise.all(promises);
+  }
+
+  function _hasActiveTracks(exclude) {
+    return [dramaticTrack, partyTrack, investigationTrack, revealTrack]
+      .some(t => t && t !== exclude && !t.paused);
+  }
+
+  function playDramatic() {
+    if (!dramaticTrack || !dramaticTrack.paused) return;
+    if (revealTrack && !revealTrack.paused) return;
+    if (_hasActiveTracks(dramaticTrack)) {
+      _stopAllTracks().then(() => _fadeIn(dramaticTrack, VOLUME, FADE_MS));
+    } else {
+      _fadeIn(dramaticTrack, VOLUME, FADE_MS);
+    }
+  }
+
+  function playParty() {
+    if (!partyTrack || !partyTrack.paused) return;
+    if (_hasActiveTracks(partyTrack)) {
+      _stopAllTracks().then(() => _fadeIn(partyTrack, VOLUME, FADE_MS));
+    } else {
+      _fadeIn(partyTrack, VOLUME, FADE_MS);
+    }
+  }
+
+  function playInvestigation() {
+    if (!investigationTrack) return;
+    _stopAllTracks().then(() => {
+      _fadeIn(investigationTrack, VOLUME, FADE_MS);
+    });
+  }
+
+  /** Reveal / ending screen: fades out other BGM, then fades in (non-looping). */
+  function playReveal() {
+    if (!revealTrack) return;
+    _stopAllTracks().then(() => {
+      revealTrack.currentTime = 0;
+      _fadeIn(revealTrack, VOLUME, FADE_MS);
+    });
+  }
+
+  function stopReveal() {
+    if (revealTrack && !revealTrack.paused) {
+      return _fadeOut(revealTrack, FADE_MS);
+    }
+    return Promise.resolve();
+  }
+
+  function stopAll() {
+    return _stopAllTracks();
+  }
+
+  function stopDramatic() {
+    if (dramaticTrack && !dramaticTrack.paused) {
+      return _fadeOut(dramaticTrack, FADE_MS);
+    }
+    return Promise.resolve();
+  }
+
+  function toggleMute() {
+    muted = !muted;
+    localStorage.setItem(STORAGE_KEY, muted ? '1' : '0');
+    [dramaticTrack, partyTrack, investigationTrack, revealTrack].forEach(t => {
+      if (t) t.muted = muted;
+    });
+    return muted;
+  }
+
+  function isMuted() {
+    return muted;
+  }
+
+  return {
+    init,
+    playDramatic,
+    playParty,
+    playInvestigation,
+    playReveal,
+    stopAll,
+    stopDramatic,
+    stopReveal,
+    toggleMute,
+    isMuted
+  };
+})();

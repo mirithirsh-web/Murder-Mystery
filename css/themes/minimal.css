@@ -1,0 +1,82 @@
+/* ============================================
+   MINIMAL THEME — Clean, lots of whitespace
+   ============================================ */
+
+body.theme-minimal {
+  --bg:            #ffffff;
+  --surface:       #f8f8f8;
+  --surface-active: #f0f0f0;
+  --text:          #1a1a1a;
+  --text-muted:    #888;
+  --accent:        #1a1a1a;
+  --accent-hover:  #333;
+  --accent-text:   #fff;
+  --border:        #e0e0e0;
+  --shadow:        rgba(0,0,0,0.08);
+  --danger:        #d32f2f;
+  --danger-hover:  #f44336;
+  --success:       #2e7d32;
+  --radius:        6px;
+
+  --font-heading: 'Inter', -apple-system, sans-serif;
+  --font-body:    'Inter', -apple-system, sans-serif;
+}
+
+body.theme-minimal .title-decoration {
+  height: 1px;
+  background: var(--border);
+}
+
+body.theme-minimal .game-title {
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  font-size: 2.8rem;
+}
+
+body.theme-minimal .game-title .subtitle {
+  font-weight: 300;
+  letter-spacing: 0.5em;
+}
+
+body.theme-minimal .tagline {
+  font-style: normal;
+  font-weight: 300;
+}
+
+body.theme-minimal .btn {
+  border-width: 1px;
+  font-weight: 400;
+}
+
+body.theme-minimal .btn-primary {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+body.theme-minimal .scenario-card {
+  border-width: 1px;
+}
+
+body.theme-minimal .suspect-card {
+  border-width: 1px;
+}
+
+body.theme-minimal .narrative-text {
+  background: transparent;
+  padding: 0;
+  border-left: 2px solid var(--border);
+  padding-left: 1.5rem;
+}
+
+body.theme-minimal .dialogue-panel {
+  border-width: 1px;
+}
+
+body.theme-minimal .notebook-panel {
+  border-width: 1px;
+}
+
+body.theme-minimal .victim-card {
+  border-width: 1px;
+}
