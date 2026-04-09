@@ -349,8 +349,18 @@ const UIRenderer = (() => {
     const isPreEvent = storyPhase === 'pre_event';
 
     const bannerImg = document.getElementById('investigation-scene-image');
-    if (_scenarioImages?.dining_car) {
-      bannerImg.innerHTML = `<img src="${_scenarioImages.dining_car}" alt="Investigation">`;
+    const bannerSrc =
+      storyPhase === 'post_event' && _scenarioImages?.investigation_banner
+        ? _scenarioImages.investigation_banner
+        : _scenarioImages?.dining_car;
+    if (bannerSrc) {
+      const alt =
+        storyPhase === 'post_event' && _scenarioImages?.investigation_banner
+          ? 'Investigation'
+          : isPreEvent
+            ? 'The Party'
+            : 'Investigation';
+      bannerImg.innerHTML = `<img src="${bannerSrc}" alt="${alt}">`;
       bannerImg.classList.remove('hidden');
     } else {
       bannerImg.innerHTML = '';
