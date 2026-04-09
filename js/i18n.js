@@ -102,6 +102,7 @@ const i18n = (() => {
       secrets_breakdown: 'Secrets Bonus',
       secret_unknown: '???',
       toast_secret: 'Secret Discovered!',
+      toast_dismiss_hint: 'Click to dismiss',
       badge_deceased: 'Deceased',
 
       cause_accidental_poisoning: 'Accidental Poisoning',
@@ -279,6 +280,7 @@ const i18n = (() => {
       secrets_breakdown: 'בונוס סודות',
       secret_unknown: '???',
       toast_secret: 'סוד נחשף!',
+      toast_dismiss_hint: 'לחץ לסגירה',
       badge_deceased: 'נפטר/ה',
 
       cause_accidental_poisoning: 'הרעלה בשוגג',

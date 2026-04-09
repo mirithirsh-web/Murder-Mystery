@@ -27,12 +27,47 @@ const UIRenderer = (() => {
     return el;
   }
 
+  function dismissToast(toast) {
+    if (!toast || !toast.parentNode || toast.classList.contains('toast-dismissing')) return;
+    if (toast._toastAutoHideId != null) {
+      clearTimeout(toast._toastAutoHideId);
+      toast._toastAutoHideId = null;
+    }
+    if (toast._toastRemoveId != null) {
+      clearTimeout(toast._toastRemoveId);
+      toast._toastRemoveId = null;
+    }
+    toast.classList.add('toast-dismissing');
+    toast._toastRemoveId = setTimeout(() => {
+      toast._toastRemoveId = null;
+      toast.remove();
+    }, TOAST_EXIT_MS);
+  }
+
   function scheduleToastRemoval(toast, visibleMs) {
-    setTimeout(() => {
-      if (!toast.parentNode) return;
-      toast.classList.add('toast-dismissing');
-      setTimeout(() => toast.remove(), TOAST_EXIT_MS);
+    if (toast._toastAutoHideId != null) {
+      clearTimeout(toast._toastAutoHideId);
+      toast._toastAutoHideId = null;
+    }
+    toast._toastAutoHideId = setTimeout(() => {
+      toast._toastAutoHideId = null;
+      dismissToast(toast);
     }, visibleMs);
+  }
+
+  function wireToastInteractions(toast) {
+    const hint = i18n.t('toast_dismiss_hint');
+    toast.setAttribute('role', 'button');
+    toast.setAttribute('tabindex', '0');
+    toast.setAttribute('aria-label', hint);
+    toast.title = hint;
+    toast.addEventListener('click', () => dismissToast(toast));
+    toast.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        dismissToast(toast);
+      }
+    });
   }
 
   function setScenarioImages(images) {
@@ -538,6 +573,7 @@ const UIRenderer = (() => {
     toast.className = 'clue-toast';
     toast.innerHTML = `${icon} ${label} ${text}`;
     getToastStack().appendChild(toast);
+    wireToastInteractions(toast);
     scheduleToastRemoval(toast, TOAST_VISIBLE_CLUE_MS);
   }
 
@@ -546,6 +582,7 @@ const UIRenderer = (() => {
     toast.className = 'clue-toast new-lead-toast';
     toast.textContent = `🔍 ${i18n.t('toast_new_lead', { name: suspectName })}`;
     getToastStack().appendChild(toast);
+    wireToastInteractions(toast);
     scheduleToastRemoval(toast, TOAST_VISIBLE_LEAD_MS);
   }
 
@@ -859,6 +896,7 @@ const UIRenderer = (() => {
     toast.className = 'clue-toast secret-toast';
     toast.innerHTML = `🔓 <strong>${i18n.t('toast_secret')}</strong> ${secretText}`;
     getToastStack().appendChild(toast);
+    wireToastInteractions(toast);
     scheduleToastRemoval(toast, TOAST_VISIBLE_SECRET_MS);
   }
 
