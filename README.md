@@ -24,6 +24,7 @@ If you see **404 — There isn’t a GitHub Pages site here**, GitHub has **not 
 | Folder is **`/docs`** | Must be **`/ (root)`** — `index.html` is at repo root, not in `docs/`. |
 | Branch is not **`main`** | Select **`main`**. |
 | **Source** is still **GitHub Actions** | Switch to **Deploy from a branch** (this repo does not use a Pages workflow). |
+| **Actions** show “pages build and deployment” **cancelled** / **deploy skipped** | Same fix: **Settings → Pages → Source → Deploy from a branch** → `main` + **`/ (root)`**. Static sites should not rely on the Actions Pages pipeline. |
 | Repo is **private** (free plan) | GitHub may block Pages on private repos unless you have a paid feature; make the repo **public** for free hosting. |
 
 ### Enable Pages via API (one command)
